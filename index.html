@@ -1,4 +1,56 @@
-<!DOCTYPE html>
+(adulti > 0 ? '<div class="voce-preventivo"><span>' + nomeMenuAdulti + ' (x' + adulti + ')</span><span>€' + costoAdulti.toFixed(2) + '</span></div>' : '') +
+                    (bambini > 0 && menuBambini && menuBambini.value !== 'no-menu' ? '<div class="voce-preventivo"><span>' + nomeMenuBambini + ' (x' + bambini + ')</span><span>€' + costoBambini.toFixed(2) + '</span></div>' : '') +
+                    (bambini > 0 && menuBambini && menuBambini.value === 'no-menu' ? '<div class="voce-preventivo"><span>Bambini senza menu (x' + bambini + ')</span><span>€0.00</span></div>' : '') +
+                '</div>';
+            }
+
+            preventivoHTML += '<div class="dettagli">' +
+                '<h3>💰 Riepilogo Costi</h3>' +
+                (costoMenu > 0 ? '<div class="voce-preventivo"><span>Totale Menu</span><span>€' + costoMenu.toFixed(2) + '</span></div>' : '');
+
+            // Aggiungi street food con maggiorazioni
+            streetFoodItems.forEach(function(item) {
+                preventivoHTML += '<div class="voce-preventivo"><span>' + item.descrizione + '</span><span>€' + item.costo.toFixed(2) + '</span></div>';
+            });
+
+            preventivoHTML += (animazione ? '<div class="voce-preventivo"><span>Animazione Base</span><span>€150.00</span></div>' : '') +
+                (allestimento ? '<div class="voce-preventivo"><span>Allestimento Base</span><span>€150.00</span></div>' : '') +
+                (extraAnimatori ? '<div class="voce-preventivo"><span>Extra Animatori</span><span>€' + prezzoAnimatori.toFixed(2) + '</span></div>' : '') +
+                (gonfiabili ? '<div class="voce-preventivo"><span>Gonfiabili</span><span>€' + prezzoGonfiabili.toFixed(2) + '</span></div>' : '') +
+                (scenografie ? '<div class="voce-preventivo"><span>Scenografie</span><span>€' + prezzoScenografie.toFixed(2) + '</span></div>' : '') +
+                '<div class="totale"><strong>TOTALE: €' + totale.toFixed(2) + '</strong></div>' +
+                '<div style="text-align: center; margin-top: 15px;"><strong>Anticipo richiesto (30%): €' + anticipo.toFixed(2) + '</strong></div>' +
+            '</div>' +
+            '<div class="dettagli">' +
+                '<h3>✅ Servizi Inclusi</h3>' +
+                '<p>• Tavoli, sedie, tovagliato e stoviglie monouso<br>' +
+                '• Parcheggio gratuito<br>' +
+                '• Uso bagni e riscaldamento<br>' +
+                '• Bevande analcoliche incluse<br>' +
+                '• Servizio di sala</p>' +
+            '</div>' +
+            (altriServizi ? '<div class="dettagli"><h3>🎭 Altri Servizi Richiesti:</h3><p>' + altriServizi + '</p></div>' : '') +
+            (note ? '<div class="dettagli"><h3>📝 Note:</h3><p>' + note + '</p></div>' : '') +
+            '<div class="dettagli" style="background: rgba(255,255,255,0.1); padding: 20px; border-radius: 10px; margin-top: 20px; font-size: 14px;">' +
+                '<h3>📋 Condizioni di Prenotazione</h3>' +
+                '<p><strong>Anticipo:</strong> 30% del totale (€' + anticipo.toFixed(2) + ')<br>' +
+                '<strong>Cancellazione:</strong><br>' +
+                '• Fino a 7 giorni prima: si perde l\'anticipo<br>' +
+                '• Da 6 giorni prima: va versato il 50% dell\'evento (€' + (totale * 0.5).toFixed(2) + ')<br>' +
+                '<strong>Bevande alcoliche:</strong> A pagamento a parte<br>' +
+                '<strong>Saldo:</strong> Il giorno dell\'evento</p>' +
+            '</div>' +
+            '<button class="btn stampa-btn" onclick="stampaPDF()">🖨️ Stampa Preventivo</button>' +
+        '</div>';
+
+            document.getElementById('risultato').innerHTML = preventivoHTML;
+        }
+
+        // Inizializzazione
+        updateTotaleOspiti();
+    </script>
+</body>
+</html><!DOCTYPE html>
 <html lang="it">
 <head>
     <meta charset="UTF-8">
@@ -277,16 +329,46 @@
 
         @media print {
             body {
-                background: white;
+                background: white !important;
                 font-size: 12px;
             }
             .container {
                 box-shadow: none;
                 margin: 0;
                 padding: 20px;
+                background: white !important;
             }
-            .btn, .btn-group {
-                display: none;
+            .form-section, .btn, .btn-group, form {
+                display: none !important;
+            }
+            .preventivo {
+                background: white !important;
+                color: black !important;
+                box-shadow: none;
+                margin: 0;
+                padding: 0;
+            }
+            .dettagli {
+                background: white !important;
+                border: 1px solid #ddd;
+                color: black !important;
+            }
+            .voce-preventivo {
+                border-bottom: 1px solid #ddd !important;
+            }
+            .numero-preventivo {
+                background: #3d5a3d !important;
+                color: white !important;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+            .totale {
+                background: #f8f9fa !important;
+                color: black !important;
+                border: 2px solid #3d5a3d;
+            }
+            .header {
+                display: none !important;
             }
         }
 
@@ -432,45 +514,75 @@
 
             <!-- Postazioni Street Food -->
             <div class="form-section">
-                <h3>🍕 Postazioni Street Food (fino a 50 persone)</h3>
+                <h3>🍕 Postazioni Street Food</h3>
                 <div class="checkbox-group">
                     <div class="checkbox-item">
                         <input type="checkbox" id="streetPizza">
-                        <label for="streetPizza">Pizza 2 Gusti - €500</label>
+                        <label for="streetPizza">Pizza 2 Gusti - €500 (fino a 50 persone)</label>
                     </div>
                     <div class="checkbox-item">
                         <input type="checkbox" id="streetSpritz">
-                        <label for="streetSpritz">Spritz - €300</label>
+                        <label for="streetSpritz">Spritz - €300 (fino a 50 persone)</label>
                     </div>
                     <div class="checkbox-item">
                         <input type="checkbox" id="streetBbq">
-                        <label for="streetBbq">American BBQ - €500</label>
+                        <label for="streetBbq">American BBQ - €500 (fino a 50 persone)</label>
                     </div>
                     <div class="checkbox-item">
                         <input type="checkbox" id="streetFriggitoria">
-                        <label for="streetFriggitoria">Friggitoria Napoletana - €350</label>
+                        <label for="streetFriggitoria">Friggitoria Napoletana - €350 (fino a 50 persone)</label>
                     </div>
                     <div class="checkbox-item">
                         <input type="checkbox" id="streetGraffe">
-                        <label for="streetGraffe">Graffe - €250</label>
+                        <label for="streetGraffe">Graffe - €250 (fino a 50 persone)</label>
                     </div>
                 </div>
                 <div style="background: #fff3cd; border: 1px solid #ffeaa7; border-radius: 8px; padding: 15px; margin-top: 15px;">
-                    <small><strong>⚠️ Nota:</strong> Le postazioni street food sono disponibili solo per eventi fino a 50 persone</small>
+                    <small><strong>⚠️ Nota:</strong> Prezzi base fino a 50 persone. Ogni 10 persone aggiuntive: +€100</small>
                 </div>
             </div>
 
             <!-- Servizi Aggiuntivi -->
             <div class="form-section">
                 <h3>🎉 Servizi Aggiuntivi</h3>
+                
+                <!-- Animazione Base -->
                 <div class="checkbox-group">
                     <div class="checkbox-item">
                         <input type="checkbox" id="animazione">
-                        <label for="animazione">Animazione - €150</label>
+                        <label for="animazione">Animazione Base - €150</label>
                     </div>
                     <div class="checkbox-item">
                         <input type="checkbox" id="allestimento">
                         <label for="allestimento">Allestimento Base - €150</label>
+                    </div>
+                </div>
+
+                <!-- Servizi Animazione Extra -->
+                <div style="margin-top: 20px;">
+                    <h4 style="color: #3d5a3d; margin-bottom: 15px;">🎭 Servizi Animazione Extra</h4>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="extraAnimatori">Extra Animatori:</label>
+                            <div style="display: flex; gap: 10px; align-items: center;">
+                                <input type="checkbox" id="extraAnimatori" style="width: auto;">
+                                <input type="number" id="prezzoAnimatori" placeholder="Prezzo €" min="0" style="flex: 1;">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="gonfiabili">Gonfiabili:</label>
+                            <div style="display: flex; gap: 10px; align-items: center;">
+                                <input type="checkbox" id="gonfiabili" style="width: auto;">
+                                <input type="number" id="prezzoGonfiabili" placeholder="Prezzo €" min="0" style="flex: 1;">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="scenografie">Scenografie:</label>
+                        <div style="display: flex; gap: 10px; align-items: center;">
+                            <input type="checkbox" id="scenografie" style="width: auto;">
+                            <input type="number" id="prezzoScenografie" placeholder="Prezzo €" min="0" style="flex: 1;">
+                        </div>
                     </div>
                 </div>
                 
@@ -562,6 +674,15 @@
             var streetBbq = document.getElementById('streetBbq').checked;
             var streetFriggitoria = document.getElementById('streetFriggitoria').checked;
             var streetGraffe = document.getElementById('streetGraffe').checked;
+            
+            // Servizi animazione extra
+            var extraAnimatori = document.getElementById('extraAnimatori').checked;
+            var prezzoAnimatori = parseInt(document.getElementById('prezzoAnimatori').value) || 0;
+            var gonfiabili = document.getElementById('gonfiabili').checked;
+            var prezzoGonfiabili = parseInt(document.getElementById('prezzoGonfiabili').value) || 0;
+            var scenografie = document.getElementById('scenografie').checked;
+            var prezzoScenografie = parseInt(document.getElementById('prezzoScenografie').value) || 0;
+            
             var altriServizi = document.getElementById('altriServizi').value;
             var note = document.getElementById('note').value;
 
@@ -593,10 +714,17 @@
                 return;
             }
 
-            // Verifica limiti street food
-            var hasStreetFood = streetPizza || streetSpritz || streetBbq || streetFriggitoria || streetGraffe;
-            if (hasStreetFood && totaleOspiti > 50) {
-                alert('Le postazioni street food sono disponibili solo per eventi fino a 50 persone');
+            // Validazioni servizi extra animazione
+            if (extraAnimatori && prezzoAnimatori === 0) {
+                alert('Inserisci il prezzo per Extra Animatori');
+                return;
+            }
+            if (gonfiabili && prezzoGonfiabili === 0) {
+                alert('Inserisci il prezzo per Gonfiabili');
+                return;
+            }
+            if (scenografie && prezzoScenografie === 0) {
+                alert('Inserisci il prezzo per Scenografie');
                 return;
             }
 
@@ -664,17 +792,57 @@
                 }
             }
 
+            // Calcolo costi street food con maggiorazioni
+            function calcolaStreetFood(prezzo, nome) {
+                if (totaleOspiti <= 50) {
+                    return { costo: prezzo, descrizione: nome + ' (fino a 50 persone)' };
+                } else {
+                    var maggiorazione = Math.ceil((totaleOspiti - 50) / 10) * 100;
+                    return { 
+                        costo: prezzo + maggiorazione, 
+                        descrizione: nome + ' (' + totaleOspiti + ' persone: base €' + prezzo + ' + maggiorazione €' + maggiorazione + ')'
+                    };
+                }
+            }
+
             var costoAnimazione = animazione ? 150 : 0;
             var costoAllestimento = allestimento ? 150 : 0;
-            var costoStreetPizza = streetPizza ? 500 : 0;
-            var costoStreetSpritz = streetSpritz ? 300 : 0;
-            var costoStreetBbq = streetBbq ? 500 : 0;
-            var costoStreetFriggitoria = streetFriggitoria ? 350 : 0;
-            var costoStreetGraffe = streetGraffe ? 250 : 0;
+            var costoExtraAnimatori = extraAnimatori ? prezzoAnimatori : 0;
+            var costoGonfiabili = gonfiabili ? prezzoGonfiabili : 0;
+            var costoScenografie = scenografie ? prezzoScenografie : 0;
+
+            var streetFoodItems = [];
+            var costoStreetFood = 0;
+            
+            if (streetPizza) {
+                var pizza = calcolaStreetFood(500, 'Postazione Pizza');
+                streetFoodItems.push(pizza);
+                costoStreetFood += pizza.costo;
+            }
+            if (streetSpritz) {
+                var spritz = calcolaStreetFood(300, 'Postazione Spritz');
+                streetFoodItems.push(spritz);
+                costoStreetFood += spritz.costo;
+            }
+            if (streetBbq) {
+                var bbq = calcolaStreetFood(500, 'Postazione American BBQ');
+                streetFoodItems.push(bbq);
+                costoStreetFood += bbq.costo;
+            }
+            if (streetFriggitoria) {
+                var friggitoria = calcolaStreetFood(350, 'Postazione Friggitoria Napoletana');
+                streetFoodItems.push(friggitoria);
+                costoStreetFood += friggitoria.costo;
+            }
+            if (streetGraffe) {
+                var graffe = calcolaStreetFood(250, 'Postazione Graffe');
+                streetFoodItems.push(graffe);
+                costoStreetFood += graffe.costo;
+            }
             
             var costoMenu = costoAdulti + costoBambini;
-            var costoStreetFood = costoStreetPizza + costoStreetSpritz + costoStreetBbq + costoStreetFriggitoria + costoStreetGraffe;
-            var totale = costoMenu + costoAnimazione + costoAllestimento + costoStreetFood;
+            var costoServiziExtra = costoExtraAnimatori + costoGonfiabili + costoScenografie;
+            var totale = costoMenu + costoAnimazione + costoAllestimento + costoStreetFood + costoServiziExtra;
             var anticipo = Math.round(totale * 0.3);
 
             // Nome spazio
