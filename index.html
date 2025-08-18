@@ -1,56 +1,4 @@
-(adulti > 0 ? '<div class="voce-preventivo"><span>' + nomeMenuAdulti + ' (x' + adulti + ')</span><span>€' + costoAdulti.toFixed(2) + '</span></div>' : '') +
-                    (bambini > 0 && menuBambini && menuBambini.value !== 'no-menu' ? '<div class="voce-preventivo"><span>' + nomeMenuBambini + ' (x' + bambini + ')</span><span>€' + costoBambini.toFixed(2) + '</span></div>' : '') +
-                    (bambini > 0 && menuBambini && menuBambini.value === 'no-menu' ? '<div class="voce-preventivo"><span>Bambini senza menu (x' + bambini + ')</span><span>€0.00</span></div>' : '') +
-                '</div>';
-            }
-
-            preventivoHTML += '<div class="dettagli">' +
-                '<h3>💰 Riepilogo Costi</h3>' +
-                (costoMenu > 0 ? '<div class="voce-preventivo"><span>Totale Menu</span><span>€' + costoMenu.toFixed(2) + '</span></div>' : '');
-
-            // Aggiungi street food con maggiorazioni
-            streetFoodItems.forEach(function(item) {
-                preventivoHTML += '<div class="voce-preventivo"><span>' + item.descrizione + '</span><span>€' + item.costo.toFixed(2) + '</span></div>';
-            });
-
-            preventivoHTML += (animazione ? '<div class="voce-preventivo"><span>Animazione Base</span><span>€150.00</span></div>' : '') +
-                (allestimento ? '<div class="voce-preventivo"><span>Allestimento Base</span><span>€150.00</span></div>' : '') +
-                (extraAnimatori ? '<div class="voce-preventivo"><span>Extra Animatori</span><span>€' + prezzoAnimatori.toFixed(2) + '</span></div>' : '') +
-                (gonfiabili ? '<div class="voce-preventivo"><span>Gonfiabili</span><span>€' + prezzoGonfiabili.toFixed(2) + '</span></div>' : '') +
-                (scenografie ? '<div class="voce-preventivo"><span>Scenografie</span><span>€' + prezzoScenografie.toFixed(2) + '</span></div>' : '') +
-                '<div class="totale"><strong>TOTALE: €' + totale.toFixed(2) + '</strong></div>' +
-                '<div style="text-align: center; margin-top: 15px;"><strong>Anticipo richiesto (30%): €' + anticipo.toFixed(2) + '</strong></div>' +
-            '</div>' +
-            '<div class="dettagli">' +
-                '<h3>✅ Servizi Inclusi</h3>' +
-                '<p>• Tavoli, sedie, tovagliato e stoviglie monouso<br>' +
-                '• Parcheggio gratuito<br>' +
-                '• Uso bagni e riscaldamento<br>' +
-                '• Bevande analcoliche incluse<br>' +
-                '• Servizio di sala</p>' +
-            '</div>' +
-            (altriServizi ? '<div class="dettagli"><h3>🎭 Altri Servizi Richiesti:</h3><p>' + altriServizi + '</p></div>' : '') +
-            (note ? '<div class="dettagli"><h3>📝 Note:</h3><p>' + note + '</p></div>' : '') +
-            '<div class="dettagli" style="background: rgba(255,255,255,0.1); padding: 20px; border-radius: 10px; margin-top: 20px; font-size: 14px;">' +
-                '<h3>📋 Condizioni di Prenotazione</h3>' +
-                '<p><strong>Anticipo:</strong> 30% del totale (€' + anticipo.toFixed(2) + ')<br>' +
-                '<strong>Cancellazione:</strong><br>' +
-                '• Fino a 7 giorni prima: si perde l\'anticipo<br>' +
-                '• Da 6 giorni prima: va versato il 50% dell\'evento (€' + (totale * 0.5).toFixed(2) + ')<br>' +
-                '<strong>Bevande alcoliche:</strong> A pagamento a parte<br>' +
-                '<strong>Saldo:</strong> Il giorno dell\'evento</p>' +
-            '</div>' +
-            '<button class="btn stampa-btn" onclick="stampaPDF()">🖨️ Stampa Preventivo</button>' +
-        '</div>';
-
-            document.getElementById('risultato').innerHTML = preventivoHTML;
-        }
-
-        // Inizializzazione
-        updateTotaleOspiti();
-    </script>
-</body>
-</html><!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="it">
 <head>
     <meta charset="UTF-8">
@@ -255,22 +203,6 @@
         
         .btn:hover {
             transform: translateY(-2px);
-        }
-
-        .btn-group {
-            display: flex;
-            gap: 10px;
-            margin: 20px 0;
-        }
-
-        .btn-secondary {
-            background: linear-gradient(45deg, #6c757d, #495057);
-            flex: 1;
-        }
-
-        .btn-success {
-            background: linear-gradient(45deg, #28a745, #20c997);
-            flex: 1;
         }
 
         .numero-preventivo {
@@ -608,24 +540,20 @@
     </div>
 
     <script>
-        // Genera numero preventivo
         function generaNumeroPreventivo() {
             var oggi = new Date();
             var anno = oggi.getFullYear();
             var mese = String(oggi.getMonth() + 1).padStart(2, '0');
             var giorno = String(oggi.getDate()).padStart(2, '0');
             
-            // Recupera il contatore dal localStorage o inizia da 1
             var contatore = localStorage.getItem('contatore_preventivi_' + anno + mese + giorno) || 1;
             var numeroPreventivo = 'FNT-' + anno + mese + giorno + '-' + String(contatore).padStart(3, '0');
             
-            // Incrementa e salva il contatore
             localStorage.setItem('contatore_preventivi_' + anno + mese + giorno, parseInt(contatore) + 1);
             
             return numeroPreventivo;
         }
 
-        // Stampa preventivo
         function stampaPDF() {
             window.print();
         }
@@ -675,7 +603,6 @@
             var streetFriggitoria = document.getElementById('streetFriggitoria').checked;
             var streetGraffe = document.getElementById('streetGraffe').checked;
             
-            // Servizi animazione extra
             var extraAnimatori = document.getElementById('extraAnimatori').checked;
             var prezzoAnimatori = parseInt(document.getElementById('prezzoAnimatori').value) || 0;
             var gonfiabili = document.getElementById('gonfiabili').checked;
@@ -695,7 +622,7 @@
             }
 
             if (!data || !ora) {
-                alert('Inserisci data e ora dell\'evento');
+                alert('Inserisci data e ora dell evento');
                 return;
             }
 
@@ -710,11 +637,10 @@
             }
 
             if (bambini > 0 && !menuBambini) {
-                alert('Seleziona un\'opzione per i bambini');
+                alert('Seleziona un opzione per i bambini');
                 return;
             }
 
-            // Validazioni servizi extra animazione
             if (extraAnimatori && prezzoAnimatori === 0) {
                 alert('Inserisci il prezzo per Extra Animatori');
                 return;
@@ -728,7 +654,6 @@
                 return;
             }
 
-            // Capacità spazi
             var capacita = {
                 'sala1': 40,
                 'sala2': 70,
@@ -738,14 +663,12 @@
             };
 
             if (totaleOspiti > capacita[spazio]) {
-                alert('Il numero totale di ospiti (' + totaleOspiti + ') supera la capacità dello spazio selezionato (' + capacita[spazio] + ' posti)');
+                alert('Il numero totale di ospiti supera la capacità dello spazio selezionato');
                 return;
             }
 
-            // Genera numero preventivo
             var numeroPreventivo = generaNumeroPreventivo();
 
-            // Calcola età
             var oggi = new Date();
             var nascita = new Date(dataNascita);
             var eta = oggi.getFullYear() - nascita.getFullYear();
@@ -755,13 +678,11 @@
                 eta--;
             }
 
-            // Calcolo costi
             var costoAdulti = 0;
             var costoBambini = 0;
             var nomeMenuAdulti = '';
             var nomeMenuBambini = '';
             
-            // Menu Adulti
             if (adulti > 0 && menuAdulti) {
                 switch(menuAdulti.value) {
                     case 'rosticceria':
@@ -779,7 +700,6 @@
                 }
             }
 
-            // Menu Bambini
             if (bambini > 0 && menuBambini && menuBambini.value !== 'no-menu') {
                 costoBambini = bambini * 7.99;
                 switch(menuBambini.value) {
@@ -792,7 +712,6 @@
                 }
             }
 
-            // Calcolo costi street food con maggiorazioni
             function calcolaStreetFood(prezzo, nome) {
                 if (totaleOspiti <= 50) {
                     return { costo: prezzo, descrizione: nome + ' (fino a 50 persone)' };
@@ -845,7 +764,6 @@
             var totale = costoMenu + costoAnimazione + costoAllestimento + costoStreetFood + costoServiziExtra;
             var anticipo = Math.round(totale * 0.3);
 
-            // Nome spazio
             var nomiSpazi = {
                 'sala1': 'Sala Interna 1 (40 posti)',
                 'sala2': 'Sala Interna 2 (70 posti)', 
@@ -854,7 +772,6 @@
                 'tutto': 'Tutto l\'Agriturismo (200 posti)'
             };
 
-            // Formatta data
             var dataFormattata = new Date(data).toLocaleDateString('it-IT', {
                 weekday: 'long',
                 year: 'numeric',
@@ -862,7 +779,6 @@
                 day: 'numeric'
             });
 
-            // Genera HTML preventivo
             var preventivoHTML = '<div class="preventivo">' +
                 '<div class="numero-preventivo">Preventivo N°: ' + numeroPreventivo + '</div>' +
                 '<h2>📋 Preventivo Evento</h2>' +
@@ -891,14 +807,18 @@
 
             preventivoHTML += '<div class="dettagli">' +
                 '<h3>💰 Riepilogo Costi</h3>' +
-                (costoMenu > 0 ? '<div class="voce-preventivo"><span>Totale Menu</span><span>€' + costoMenu.toFixed(2) + '</span></div>' : '') +
-                (streetPizza ? '<div class="voce-preventivo"><span>Postazione Pizza</span><span>€500.00</span></div>' : '') +
-                (streetSpritz ? '<div class="voce-preventivo"><span>Postazione Spritz</span><span>€300.00</span></div>' : '') +
-                (streetBbq ? '<div class="voce-preventivo"><span>Postazione American BBQ</span><span>€500.00</span></div>' : '') +
-                (streetFriggitoria ? '<div class="voce-preventivo"><span>Postazione Friggitoria Napoletana</span><span>€350.00</span></div>' : '') +
-                (streetGraffe ? '<div class="voce-preventivo"><span>Postazione Graffe</span><span>€250.00</span></div>' : '') +
-                (animazione ? '<div class="voce-preventivo"><span>Animazione</span><span>€150.00</span></div>' : '') +
+                (costoMenu > 0 ? '<div class="voce-preventivo"><span>Totale Menu</span><span>€' + costoMenu.toFixed(2) + '</span></div>' : '');
+
+            for (var i = 0; i < streetFoodItems.length; i++) {
+                var item = streetFoodItems[i];
+                preventivoHTML += '<div class="voce-preventivo"><span>' + item.descrizione + '</span><span>€' + item.costo.toFixed(2) + '</span></div>';
+            }
+
+            preventivoHTML += (animazione ? '<div class="voce-preventivo"><span>Animazione Base</span><span>€150.00</span></div>' : '') +
                 (allestimento ? '<div class="voce-preventivo"><span>Allestimento Base</span><span>€150.00</span></div>' : '') +
+                (extraAnimatori ? '<div class="voce-preventivo"><span>Extra Animatori</span><span>€' + prezzoAnimatori.toFixed(2) + '</span></div>' : '') +
+                (gonfiabili ? '<div class="voce-preventivo"><span>Gonfiabili</span><span>€' + prezzoGonfiabili.toFixed(2) + '</span></div>' : '') +
+                (scenografie ? '<div class="voce-preventivo"><span>Scenografie</span><span>€' + prezzoScenografie.toFixed(2) + '</span></div>' : '') +
                 '<div class="totale"><strong>TOTALE: €' + totale.toFixed(2) + '</strong></div>' +
                 '<div style="text-align: center; margin-top: 15px;"><strong>Anticipo richiesto (30%): €' + anticipo.toFixed(2) + '</strong></div>' +
             '</div>' +
@@ -927,7 +847,6 @@
             document.getElementById('risultato').innerHTML = preventivoHTML;
         }
 
-        // Inizializzazione
         updateTotaleOspiti();
     </script>
 </body>
