@@ -422,65 +422,70 @@
             <!-- Menu Selection -->
             <div class="form-section">
                 <h3>🍽️ Selezione Menu</h3>
+                
+                <!-- Prezzi Menu Adulti -->
+                <div style="background: #e8f4f8; padding: 15px; border-radius: 10px; margin-bottom: 20px;">
+                    <h4 style="color: #3d5a3d; margin-bottom: 15px;">💰 Prezzi Menu Adulti</h4>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="prezzoRosticceria">Rosticceria (€):</label>
+                            <input type="number" id="prezzoRosticceria" value="14" min="0" step="0.01">
+                        </div>
+                        <div class="form-group">
+                            <label for="prezzoBbq">American BBQ (€):</label>
+                            <input type="number" id="prezzoBbq" value="40" min="0" step="0.01">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="prezzoPizza">Menu Pizza (€):</label>
+                        <input type="number" id="prezzoPizza" value="25" min="0" step="0.01" style="width: 48%;">
+                    </div>
+                </div>
+
+                <!-- Prezzi Menu Bambini -->
+                <div style="background: #fff3cd; padding: 15px; border-radius: 10px; margin-bottom: 20px;">
+                    <h4 style="color: #3d5a3d; margin-bottom: 15px;">👶 Prezzi Menu Bambini</h4>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="prezzoPasta">Pasta & Polpette (€):</label>
+                            <input type="number" id="prezzoPasta" value="7.99" min="0" step="0.01">
+                        </div>
+                        <div class="form-group">
+                            <label for="prezzoPanino">Panino & Pizza (€):</label>
+                            <input type="number" id="prezzoPanino" value="7.99" min="0" step="0.01">
+                        </div>
+                    </div>
+                </div>
+
                 <div class="menu-selection">
                     <div class="menu-card">
                         <h4>Menu Adulti</h4>
                         <div class="menu-option">
-                            <div style="display: flex; align-items: center; gap: 10px;">
-                                <input type="radio" name="menuAdulti" value="rosticceria" id="adulti-rosticceria" style="width: auto !important;">
-                                <label for="adulti-rosticceria" style="flex: 1;">Rosticceria<br><small>500g di porzione</small></label>
-                                <div style="display: flex; align-items: center; gap: 5px;">
-                                    <span>€</span>
-                                    <input type="number" id="prezzoRosticceria" value="14" min="0" step="0.01" style="width: 70px !important; padding: 5px !important;">
-                                </div>
-                            </div>
+                            <input type="radio" name="menuAdulti" value="rosticceria" id="adulti-rosticceria">
+                            <label for="adulti-rosticceria">Rosticceria<br><small>500g di porzione</small></label>
                         </div>
                         <div class="menu-option">
-                            <div style="display: flex; align-items: center; gap: 10px;">
-                                <input type="radio" name="menuAdulti" value="bbq" id="adulti-bbq" style="width: auto !important;">
-                                <label for="adulti-bbq" style="flex: 1;">American BBQ<br><small>Ali, ribs, pulled pork, pannocchia, salsiccia</small></label>
-                                <div style="display: flex; align-items: center; gap: 5px;">
-                                    <span>€</span>
-                                    <input type="number" id="prezzoBbq" value="40" min="0" step="0.01" style="width: 70px !important; padding: 5px !important;">
-                                </div>
-                            </div>
+                            <input type="radio" name="menuAdulti" value="bbq" id="adulti-bbq">
+                            <label for="adulti-bbq">American BBQ<br><small>Ali, ribs, pulled pork, pannocchia, salsiccia</small></label>
                         </div>
                         <div class="menu-option">
-                            <div style="display: flex; align-items: center; gap: 10px;">
-                                <input type="radio" name="menuAdulti" value="pizza" id="adulti-pizza" style="width: auto !important;">
-                                <label for="adulti-pizza" style="flex: 1;">Menu Pizza<br><small>Pizza 3 gusti + friggitoria</small></label>
-                                <div style="display: flex; align-items: center; gap: 5px;">
-                                    <span>€</span>
-                                    <input type="number" id="prezzoPizza" value="25" min="0" step="0.01" style="width: 70px !important; padding: 5px !important;">
-                                </div>
-                            </div>
+                            <input type="radio" name="menuAdulti" value="pizza" id="adulti-pizza">
+                            <label for="adulti-pizza">Menu Pizza<br><small>Pizza 3 gusti + friggitoria</small></label>
                         </div>
                     </div>
 
                     <div class="menu-card">
                         <h4>Menu Bambini</h4>
                         <div class="menu-option">
-                            <div style="display: flex; align-items: center; gap: 10px;">
-                                <input type="radio" name="menuBambini" value="pasta" id="bambini-pasta" style="width: auto !important;">
-                                <label for="bambini-pasta" style="flex: 1;">Pasta & Polpette<br><small>Pennette al sugo + polpette/nuggets</small></label>
-                                <div style="display: flex; align-items: center; gap: 5px;">
-                                    <span>€</span>
-                                    <input type="number" id="prezzoPasta" value="7.99" min="0" step="0.01" style="width: 70px !important; padding: 5px !important;">
-                                </div>
-                            </div>
+                            <input type="radio" name="menuBambini" value="pasta" id="bambini-pasta">
+                            <label for="bambini-pasta">Pasta & Polpette<br><small>Pennette al sugo + polpette/nuggets</small></label>
                         </div>
                         <div class="menu-option">
-                            <div style="display: flex; align-items: center; gap: 10px;">
-                                <input type="radio" name="menuBambini" value="panino" id="bambini-panino" style="width: auto !important;">
-                                <label for="bambini-panino" style="flex: 1;">Panino & Pizza<br><small>Panino prosciutto + pizzetta + patatine</small></label>
-                                <div style="display: flex; align-items: center; gap: 5px;">
-                                    <span>€</span>
-                                    <input type="number" id="prezzoPanino" value="7.99" min="0" step="0.01" style="width: 70px !important; padding: 5px !important;">
-                                </div>
-                            </div>
+                            <input type="radio" name="menuBambini" value="panino" id="bambini-panino">
+                            <label for="bambini-panino">Panino & Pizza<br><small>Panino prosciutto + pizzetta + patatine</small></label>
                         </div>
                         <div class="menu-option">
-                            <input type="radio" name="menuBambini" value="no-menu" id="bambini-no" style="width: auto !important;">
+                            <input type="radio" name="menuBambini" value="no-menu" id="bambini-no">
                             <label for="bambini-no">Nessun menu bambini</label>
                         </div>
                     </div>
@@ -490,56 +495,56 @@
             <!-- Postazioni Street Food -->
             <div class="form-section">
                 <h3>🍕 Postazioni Street Food</h3>
+                
+                <!-- Prezzi Street Food -->
+                <div style="background: #f8f9fa; padding: 15px; border-radius: 10px; margin-bottom: 20px;">
+                    <h4 style="color: #3d5a3d; margin-bottom: 15px;">💰 Prezzi Base Street Food</h4>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="prezzoStreetPizza">Pizza 2 Gusti (€):</label>
+                            <input type="number" id="prezzoStreetPizza" value="500" min="0">
+                        </div>
+                        <div class="form-group">
+                            <label for="prezzoStreetSpritz">Spritz (€):</label>
+                            <input type="number" id="prezzoStreetSpritz" value="300" min="0">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="prezzoStreetBbq">American BBQ (€):</label>
+                            <input type="number" id="prezzoStreetBbq" value="500" min="0">
+                        </div>
+                        <div class="form-group">
+                            <label for="prezzoStreetFriggitoria">Friggitoria (€):</label>
+                            <input type="number" id="prezzoStreetFriggitoria" value="350" min="0">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="prezzoStreetGraffe">Graffe (€):</label>
+                        <input type="number" id="prezzoStreetGraffe" value="250" min="0" style="width: 48%;">
+                    </div>
+                </div>
+
                 <div class="checkbox-group">
-                    <div class="checkbox-item" style="flex-direction: column; align-items: flex-start;">
-                        <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px;">
-                            <input type="checkbox" id="streetPizza" style="width: auto !important;">
-                            <label for="streetPizza">Pizza 2 Gusti (fino a 50 persone)</label>
-                        </div>
-                        <div style="display: flex; align-items: center; gap: 5px;">
-                            <span>Prezzo base: €</span>
-                            <input type="number" id="prezzoStreetPizza" value="500" min="0" style="width: 80px !important; padding: 5px !important; border: 1px solid #ddd !important;">
-                        </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="streetPizza">
+                        <label for="streetPizza">Pizza 2 Gusti (fino a 50 persone)</label>
                     </div>
-                    <div class="checkbox-item" style="flex-direction: column; align-items: flex-start;">
-                        <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px;">
-                            <input type="checkbox" id="streetSpritz" style="width: auto !important;">
-                            <label for="streetSpritz">Spritz (fino a 50 persone)</label>
-                        </div>
-                        <div style="display: flex; align-items: center; gap: 5px;">
-                            <span>Prezzo base: €</span>
-                            <input type="number" id="prezzoStreetSpritz" value="300" min="0" style="width: 80px !important; padding: 5px !important; border: 1px solid #ddd !important;">
-                        </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="streetSpritz">
+                        <label for="streetSpritz">Spritz (fino a 50 persone)</label>
                     </div>
-                    <div class="checkbox-item" style="flex-direction: column; align-items: flex-start;">
-                        <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px;">
-                            <input type="checkbox" id="streetBbq" style="width: auto !important;">
-                            <label for="streetBbq">American BBQ (fino a 50 persone)</label>
-                        </div>
-                        <div style="display: flex; align-items: center; gap: 5px;">
-                            <span>Prezzo base: €</span>
-                            <input type="number" id="prezzoStreetBbq" value="500" min="0" style="width: 80px !important; padding: 5px !important; border: 1px solid #ddd !important;">
-                        </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="streetBbq">
+                        <label for="streetBbq">American BBQ (fino a 50 persone)</label>
                     </div>
-                    <div class="checkbox-item" style="flex-direction: column; align-items: flex-start;">
-                        <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px;">
-                            <input type="checkbox" id="streetFriggitoria" style="width: auto !important;">
-                            <label for="streetFriggitoria">Friggitoria Napoletana (fino a 50 persone)</label>
-                        </div>
-                        <div style="display: flex; align-items: center; gap: 5px;">
-                            <span>Prezzo base: €</span>
-                            <input type="number" id="prezzoStreetFriggitoria" value="350" min="0" style="width: 80px !important; padding: 5px !important; border: 1px solid #ddd !important;">
-                        </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="streetFriggitoria">
+                        <label for="streetFriggitoria">Friggitoria Napoletana (fino a 50 persone)</label>
                     </div>
-                    <div class="checkbox-item" style="flex-direction: column; align-items: flex-start;">
-                        <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px;">
-                            <input type="checkbox" id="streetGraffe" style="width: auto !important;">
-                            <label for="streetGraffe">Graffe (fino a 50 persone)</label>
-                        </div>
-                        <div style="display: flex; align-items: center; gap: 5px;">
-                            <span>Prezzo base: €</span>
-                            <input type="number" id="prezzoStreetGraffe" value="250" min="0" style="width: 80px !important; padding: 5px !important; border: 1px solid #ddd !important;">
-                        </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="streetGraffe">
+                        <label for="streetGraffe">Graffe (fino a 50 persone)</label>
                     </div>
                 </div>
                 <div style="background: #fff3cd; border: 1px solid #ffeaa7; border-radius: 8px; padding: 15px; margin-top: 15px;">
@@ -551,27 +556,29 @@
             <div class="form-section">
                 <h3>🎉 Servizi Aggiuntivi</h3>
                 
-                <!-- Animazione Base -->
-                <div class="checkbox-group">
-                    <div class="checkbox-item" style="flex-direction: column; align-items: flex-start;">
-                        <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px;">
-                            <input type="checkbox" id="animazione" style="width: auto !important;">
-                            <label for="animazione">Animazione Base</label>
+                <!-- Prezzi Servizi Base -->
+                <div style="background: #e8f5e8; padding: 15px; border-radius: 10px; margin-bottom: 20px;">
+                    <h4 style="color: #3d5a3d; margin-bottom: 15px;">💰 Prezzi Servizi Base</h4>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="prezzoAnimazione">Animazione Base (€):</label>
+                            <input type="number" id="prezzoAnimazione" value="150" min="0">
                         </div>
-                        <div style="display: flex; align-items: center; gap: 5px;">
-                            <span>Prezzo: €</span>
-                            <input type="number" id="prezzoAnimazione" value="150" min="0" style="width: 80px !important; padding: 5px !important; border: 1px solid #ddd !important;">
+                        <div class="form-group">
+                            <label for="prezzoAllestimento">Allestimento Base (€):</label>
+                            <input type="number" id="prezzoAllestimento" value="150" min="0">
                         </div>
                     </div>
-                    <div class="checkbox-item" style="flex-direction: column; align-items: flex-start;">
-                        <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px;">
-                            <input type="checkbox" id="allestimento" style="width: auto !important;">
-                            <label for="allestimento">Allestimento Base</label>
-                        </div>
-                        <div style="display: flex; align-items: center; gap: 5px;">
-                            <span>Prezzo: €</span>
-                            <input type="number" id="prezzoAllestimento" value="150" min="0" style="width: 80px !important; padding: 5px !important; border: 1px solid #ddd !important;">
-                        </div>
+                </div>
+
+                <div class="checkbox-group">
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="animazione">
+                        <label for="animazione">Animazione Base</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="allestimento">
+                        <label for="allestimento">Allestimento Base</label>
                     </div>
                 </div>
 
