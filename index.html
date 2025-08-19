@@ -414,15 +414,27 @@
                         <h4>Menu Adulti</h4>
                         <div class="menu-option">
                             <input type="radio" name="menuAdulti" value="rosticceria" id="adulti-rosticceria">
-                            <label for="adulti-rosticceria">Rosticceria - €14<br><small>500g di porzione</small></label>
+                            <label for="adulti-rosticceria">Rosticceria<br><small>500g di porzione</small></label>
+                            <div style="margin-top: 10px; display: flex; align-items: center; gap: 10px;">
+                                <span>Prezzo: €</span>
+                                <input type="number" id="prezzoRosticceria" value="14" min="0" step="0.01" style="width: 80px; padding: 5px;">
+                            </div>
                         </div>
                         <div class="menu-option">
                             <input type="radio" name="menuAdulti" value="bbq" id="adulti-bbq">
-                            <label for="adulti-bbq">American BBQ - €40<br><small>Ali, ribs, pulled pork, pannocchia, salsiccia</small></label>
+                            <label for="adulti-bbq">American BBQ<br><small>Ali, ribs, pulled pork, pannocchia, salsiccia</small></label>
+                            <div style="margin-top: 10px; display: flex; align-items: center; gap: 10px;">
+                                <span>Prezzo: €</span>
+                                <input type="number" id="prezzoBbq" value="40" min="0" step="0.01" style="width: 80px; padding: 5px;">
+                            </div>
                         </div>
                         <div class="menu-option">
                             <input type="radio" name="menuAdulti" value="pizza" id="adulti-pizza">
-                            <label for="adulti-pizza">Menu Pizza - €25<br><small>Pizza 3 gusti + friggitoria</small></label>
+                            <label for="adulti-pizza">Menu Pizza<br><small>Pizza 3 gusti + friggitoria</small></label>
+                            <div style="margin-top: 10px; display: flex; align-items: center; gap: 10px;">
+                                <span>Prezzo: €</span>
+                                <input type="number" id="prezzoPizza" value="25" min="0" step="0.01" style="width: 80px; padding: 5px;">
+                            </div>
                         </div>
                     </div>
 
@@ -430,11 +442,19 @@
                         <h4>Menu Bambini</h4>
                         <div class="menu-option">
                             <input type="radio" name="menuBambini" value="pasta" id="bambini-pasta">
-                            <label for="bambini-pasta">Pasta & Polpette - €7.99<br><small>Pennette al sugo + polpette/nuggets</small></label>
+                            <label for="bambini-pasta">Pasta & Polpette<br><small>Pennette al sugo + polpette/nuggets</small></label>
+                            <div style="margin-top: 10px; display: flex; align-items: center; gap: 10px;">
+                                <span>Prezzo: €</span>
+                                <input type="number" id="prezzoPasta" value="7.99" min="0" step="0.01" style="width: 80px; padding: 5px;">
+                            </div>
                         </div>
                         <div class="menu-option">
                             <input type="radio" name="menuBambini" value="panino" id="bambini-panino">
-                            <label for="bambini-panino">Panino & Pizza - €7.99<br><small>Panino prosciutto + pizzetta + patatine</small></label>
+                            <label for="bambini-panino">Panino & Pizza<br><small>Panino prosciutto + pizzetta + patatine</small></label>
+                            <div style="margin-top: 10px; display: flex; align-items: center; gap: 10px;">
+                                <span>Prezzo: €</span>
+                                <input type="number" id="prezzoPanino" value="7.99" min="0" step="0.01" style="width: 80px; padding: 5px;">
+                            </div>
                         </div>
                         <div class="menu-option">
                             <input type="radio" name="menuBambini" value="no-menu" id="bambini-no">
