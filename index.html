@@ -522,6 +522,27 @@
                     <label for="altriServizi">Altri Servizi Personalizzati:</label>
                     <textarea id="altriServizi" placeholder="Descrivi altri servizi richiesti (DJ, fotografo, decorazioni speciali, ecc.)"></textarea>
                 </div>
+
+                <!-- Richieste Personalizzate con Prezzo -->
+                <div style="margin-top: 25px;">
+                    <h4 style="color: #3d5a3d; margin-bottom: 15px;">💰 Richieste Personalizzate con Prezzo</h4>
+                    <div id="richiesteContainer">
+                        <div class="richiesta-item" style="background: white; padding: 15px; border-radius: 10px; border: 2px solid #e9ecef; margin-bottom: 10px;">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label>Descrizione Servizio:</label>
+                                    <input type="text" class="richiesta-desc" placeholder="es. DJ per 4 ore, Fotografo, Decorazioni speciali...">
+                                </div>
+                                <div class="form-group">
+                                    <label>Prezzo €:</label>
+                                    <input type="number" class="richiesta-prezzo" placeholder="0" min="0">
+                                </div>
+                            </div>
+                            <button type="button" onclick="rimuoviRichiesta(this)" style="background: #dc3545; color: white; border: none; padding: 5px 10px; border-radius: 5px; font-size: 12px; cursor: pointer;">Rimuovi</button>
+                        </div>
+                    </div>
+                    <button type="button" onclick="aggiungiRichiesta()" style="background: #28a745; color: white; border: none; padding: 10px 20px; border-radius: 8px; cursor: pointer; margin-top: 10px;">+ Aggiungi Altra Richiesta</button>
+                </div>
             </div>
 
             <!-- Note -->
@@ -540,6 +561,55 @@
     </div>
 
     <script>
+        // Funzioni per gestire richieste dinamiche
+        function aggiungiRichiesta() {
+            var container = document.getElementById('richiesteContainer');
+            var nuovaRichiesta = document.createElement('div');
+            nuovaRichiesta.className = 'richiesta-item';
+            nuovaRichiesta.style = 'background: white; padding: 15px; border-radius: 10px; border: 2px solid #e9ecef; margin-bottom: 10px;';
+            nuovaRichiesta.innerHTML = 
+                '<div class="form-row">' +
+                    '<div class="form-group">' +
+                        '<label>Descrizione Servizio:</label>' +
+                        '<input type="text" class="richiesta-desc" placeholder="es. DJ per 4 ore, Fotografo, Decorazioni speciali...">' +
+                    '</div>' +
+                    '<div class="form-group">' +
+                        '<label>Prezzo €:</label>' +
+                        '<input type="number" class="richiesta-prezzo" placeholder="0" min="0">' +
+                    '</div>' +
+                '</div>' +
+                '<button type="button" onclick="rimuoviRichiesta(this)" style="background: #dc3545; color: white; border: none; padding: 5px 10px; border-radius: 5px; font-size: 12px; cursor: pointer;">Rimuovi</button>';
+            container.appendChild(nuovaRichiesta);
+        }
+
+        function rimuoviRichiesta(button) {
+            var richiesteItems = document.querySelectorAll('.richiesta-item');
+            if (richiesteItems.length > 1) {
+                button.parentElement.remove();
+            } else {
+                alert('Deve rimanere almeno una richiesta. Puoi lasciarla vuota se non hai richieste.');
+            }
+        }
+
+        function getRichiestePersonalizzate() {
+            var richieste = [];
+            var items = document.querySelectorAll('.richiesta-item');
+            
+            items.forEach(function(item) {
+                var desc = item.querySelector('.richiesta-desc').value.trim();
+                var prezzo = parseFloat(item.querySelector('.richiesta-prezzo').value) || 0;
+                
+                if (desc && prezzo > 0) {
+                    richieste.push({
+                        descrizione: desc,
+                        prezzo: prezzo
+                    });
+                }
+            });
+            
+            return richieste;
+        }
+
         function generaNumeroPreventivo() {
             var oggi = new Date();
             var anno = oggi.getFullYear();
@@ -612,6 +682,9 @@
             
             var altriServizi = document.getElementById('altriServizi').value;
             var note = document.getElementById('note').value;
+
+            // Ottieni richieste personalizzate
+            var richiestePersonalizzate = getRichiestePersonalizzate();
 
             var totaleOspiti = adulti + bambini;
 
@@ -730,6 +803,12 @@
             var costoGonfiabili = gonfiabili ? prezzoGonfiabili : 0;
             var costoScenografie = scenografie ? prezzoScenografie : 0;
 
+            // Calcola costo richieste personalizzate
+            var costoRichiestePersonalizzate = 0;
+            richiestePersonalizzate.forEach(function(richiesta) {
+                costoRichiestePersonalizzate += richiesta.prezzo;
+            });
+
             var streetFoodItems = [];
             var costoStreetFood = 0;
             
@@ -761,7 +840,7 @@
             
             var costoMenu = costoAdulti + costoBambini;
             var costoServiziExtra = costoExtraAnimatori + costoGonfiabili + costoScenografie;
-            var totale = costoMenu + costoAnimazione + costoAllestimento + costoStreetFood + costoServiziExtra;
+            var totale = costoMenu + costoAnimazione + costoAllestimento + costoStreetFood + costoServiziExtra + costoRichiestePersonalizzate;
             var anticipo = Math.round(totale * 0.3);
 
             var nomiSpazi = {
@@ -818,8 +897,14 @@
                 (allestimento ? '<div class="voce-preventivo"><span>Allestimento Base</span><span>€150.00</span></div>' : '') +
                 (extraAnimatori ? '<div class="voce-preventivo"><span>Extra Animatori</span><span>€' + prezzoAnimatori.toFixed(2) + '</span></div>' : '') +
                 (gonfiabili ? '<div class="voce-preventivo"><span>Gonfiabili</span><span>€' + prezzoGonfiabili.toFixed(2) + '</span></div>' : '') +
-                (scenografie ? '<div class="voce-preventivo"><span>Scenografie</span><span>€' + prezzoScenografie.toFixed(2) + '</span></div>' : '') +
-                '<div class="totale"><strong>TOTALE: €' + totale.toFixed(2) + '</strong></div>' +
+                (scenografie ? '<div class="voce-preventivo"><span>Scenografie</span><span>€' + prezzoScenografie.toFixed(2) + '</span></div>' : '');
+
+            // Aggiungi richieste personalizzate al preventivo
+            richiestePersonalizzate.forEach(function(richiesta) {
+                preventivoHTML += '<div class="voce-preventivo"><span>' + richiesta.descrizione + '</span><span>€' + richiesta.prezzo.toFixed(2) + '</span></div>';
+            });
+
+            preventivoHTML += '<div class="totale"><strong>TOTALE: €' + totale.toFixed(2) + '</strong></div>' +
                 '<div style="text-align: center; margin-top: 15px;"><strong>Anticipo richiesto (30%): €' + anticipo.toFixed(2) + '</strong></div>' +
             '</div>' +
             '<div class="dettagli">' +
